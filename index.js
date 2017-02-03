@@ -63,12 +63,13 @@ request(config.request).then(result => {
                 qInitialDataFetch: [{ qTop: 0, qLeft: 0, qWidth: 1, qHeight: 2000 }]
             }
         }).then(object => {
+            // Session object has been created, return the layout that will contain a datapage defined in qInitialDataFetch
             return object.getLayout()
         })
     }))
 })
 .then(pagesOfData => {
-    // do something
+    // Do something
     console.log(pagesOfData);
     process.exit(1)
 })

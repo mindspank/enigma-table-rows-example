@@ -21,6 +21,7 @@ const USER = 'sa_repository';
 const hostname = 'usrad-aklprobook';
 
 const config = {
+    // enigma.js config
     enigma: {
         schema: schema,
         session: {
@@ -38,7 +39,7 @@ const config = {
             });
         }
     },
-    // Fetch application list from QRS.
+    // config for request to fetch application list from QRS.
     request: {
         url: `https://${hostname}:4242/qrs/app?xrfkey=abcdefghijklmnop`,
         ca: [certificates.ca],
