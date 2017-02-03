@@ -1,0 +1,11 @@
+{
+  "name": "enigma-table-rows-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "author": "Alexander Karlsson - Developer Relations - akl@qlik.com",
+  "license": "ISC"
+}
