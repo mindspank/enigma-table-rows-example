@@ -4,7 +4,7 @@
 
 const enigma = require('enigma.js');
 const Promise = require('bluebird');
-const request = Promise.promisify(require('request'));
+const request = Promise.promisify(require('request')); // Promiseifying the request module
 
 // Configuration
 let config = require('./config');
@@ -21,6 +21,7 @@ request(config.request).then(result => {
 })
 .then(apps => apps.filter(app => app.stream.name !== 'Monitoring apps')) // You can probably skip the monitoring apps.
 .then(apps => {
+    // For each app in the list, open a connection to it in QIX
     return Promise.all(apps.map(app => {
         return globalConnection.then(qix => {
             return qix.global.openDoc(app.id).then(app => app);
@@ -35,6 +36,7 @@ request(config.request).then(result => {
     return apps.reduce((previous, current) => {
         return previous.then(appsContainingTable => {
             return new Promise(resolve => {
+                // Calculate a expression using the system field $Table and concat all Tables into a single string 
                 current.evaluate('concat({1} $Table, \'|\')').then(tables => {
                     if( tables.split('|').indexOf(TABLENAME) > -1) {
                         resolve(appsContainingTable.concat(current)) // if app contains table append to list
@@ -50,6 +52,7 @@ request(config.request).then(result => {
     // We now have a list of apps containing the table we are looking for.
     // Lets fetch some data for each app.
     return Promise.all(appsContainingTable.map(app => {
+        // Create a session object, see: http://help.qlik.com/en-US/sense-developer/3.1/Subsystems/EngineAPI/Content/GenericObject/PropertyLevel/properties-that-can-be-set.htm
         return app.createSessionObject({
             qInfo: {
                 qType: 'myobject'
